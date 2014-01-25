@@ -24,7 +24,7 @@ public class ChaserSeeking : MonoBehaviour {
 	}
 
 	private void checkForChaseStarting(Vector3 distance){
-		if (distance.magnitude > 5)
+		if (distance.magnitude > 10)
 		{
 			chaseStarted = true;
 		}
@@ -42,9 +42,9 @@ public class ChaserSeeking : MonoBehaviour {
 		list.Add (tGrid);
 		int ans = 0;
 		int start = 0;
-		if (distance.magnitude < 1) return; // die!
 		if (sx.Equals (tx) && sy.Equals (ty)) {
-						transform.position += distance.normalized * .1f;
+						transform.position += distance.normalized * .5f;
+						// he's die!!!!!
 						return;
 				}
 		int end = 0;
@@ -57,7 +57,7 @@ public class ChaserSeeking : MonoBehaviour {
 				start++;
 				continue;
 			}
-			tGrid = (Grid)mazeGen.indexedGrids[x1 * mazeGen.colNum + y1]; //
+			tGrid = (Grid)mazeGen.indexedGrids[x1 * mazeGen.colNum + y1]; 
 			if (start == 0) direction = 0; else direction = (int)listans[start];
 			if (tGrid.NorthBroken) {
 				Grid sGrid = new Grid();
