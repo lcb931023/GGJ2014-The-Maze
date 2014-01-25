@@ -16,7 +16,7 @@ public class ChaserSeeking : MonoBehaviour {
 		Vector3 distance = new Vector3 ();
 		distance = Player.transform.position - transform.position;
 		int sx = (int)((transform.position.z) / 10);
-		int sy = (int)((transform.position.x+5) / 10);
+		int sy = (int)((transform.position.x + 5) / 10);
 		int tx = (int)(Player.transform.position.z / 10);
 		int ty = (int)((Player.transform.position.x + 5) / 10);
 		if (chaseStarted == false) checkForChaseStarting (distance);
@@ -34,7 +34,6 @@ public class ChaserSeeking : MonoBehaviour {
 		if (!chaseStarted) return;
 		GameManager gamemanager = GameManager.ThisClass;
 		MazeGenerator mazeGen = gamemanager.mazeGen;
-		Debug.Log (sx + "," + sy + "to" + tx + "," + ty);
 		ArrayList list = new ArrayList ();
 		int []listans = new int[1000];
 		Grid tGrid = new Grid ();
@@ -54,6 +53,10 @@ public class ChaserSeeking : MonoBehaviour {
 			int direction = 0;
 			int x1 = tGrid.iRow;
 			int y1 = tGrid.iCol;
+			if (x1 < 0 || x1 >= mazeGen.rowNum || y1 < 0 || y1 >= mazeGen.colNum) {
+				start++;
+				continue;
+			}
 			tGrid = (Grid)mazeGen.indexedGrids[x1 * mazeGen.colNum + y1]; //
 			if (start == 0) direction = 0; else direction = (int)listans[start];
 			if (tGrid.NorthBroken) {
@@ -63,7 +66,6 @@ public class ChaserSeeking : MonoBehaviour {
 				if (start == 0) direction = 1;
 				if (((sGrid.iRow).Equals(tx)) && (sGrid.iCol.Equals(ty))) {
 					ans = direction;
-					//Debug.Log("N" + tx + ty + sGrid.iRow + sGrid.iCol+ "D" + direction);
 					break;
 				}
 				bool flag = true;
@@ -82,7 +84,6 @@ public class ChaserSeeking : MonoBehaviour {
 				if (start == 0) direction = 2;
 				if (((sGrid.iRow).Equals(tx)) && (sGrid.iCol.Equals(ty))) {
 					ans = direction;
-					//Debug.Log("S" + tx + ty + sGrid.iRow + sGrid.iCol+ "D" + direction);
 					break;
 				}
 				bool flag = true;
@@ -101,7 +102,6 @@ public class ChaserSeeking : MonoBehaviour {
 				if (start == 0) direction = 3;
 				if (((sGrid.iRow).Equals(tx)) && (sGrid.iCol.Equals(ty))) {
 					ans = direction;
-					//Debug.Log("E" + tx + ty + sGrid.iRow + sGrid.iCol + "D" + direction);
 					break;
 				}
 				bool flag = true;
@@ -120,7 +120,6 @@ public class ChaserSeeking : MonoBehaviour {
 				if (start == 0) direction = 4;
 				if (((sGrid.iRow).Equals(tx)) && (sGrid.iCol.Equals(ty))) {
 					ans = direction;
-					//Debug.Log("W" + tx + ty + sGrid.iRow + sGrid.iCol+ "D" + direction);
 					break;
 				}
 				bool flag = true;
@@ -134,16 +133,15 @@ public class ChaserSeeking : MonoBehaviour {
 			}
 			start ++;
 		}
-		Debug.Log ("ans:"+ans);
 		if (ans == 1) {
-			transform.position += new Vector3(0.0f, 0.0f, -0.1f);return;}
+			transform.position += new Vector3(0.0f, 0.0f, -1.0f) * .1f;return;}
 		else if (ans == 2) {
-			transform.position += new Vector3(0.0f, 0.0f, +0.1f);return;}
+			transform.position += new Vector3(0.0f, 0.0f, 1.0f) * .1f;return;}
 		else if (ans == 3) {
-			transform.position += new Vector3(0.1f, 0.0f, 0.0f);return;}
+			transform.position += new Vector3(1.0f, 0.0f, 0.0f) * .1f;return;}
 		else if (ans ==4) {
-			transform.position += new Vector3(-0.1f, 0.0f, 0.0f);return;}
-		/*else 
-			transform.position += distance.normalized * .1f;*/
+			transform.position += new Vector3(-1.0f, 0.0f, 0.0f) * .1f;return;}
+		else 
+			transform.position += distance.normalized * .1f;
 	}
 }
