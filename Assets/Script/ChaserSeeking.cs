@@ -36,7 +36,7 @@ public class ChaserSeeking : MonoBehaviour {
 		MazeGenerator mazeGen = gamemanager.mazeGen;
 		Debug.Log (sx + "," + sy + "to" + tx + "," + ty);
 		ArrayList list = new ArrayList ();
-		ArrayList listans = new ArrayList ();
+		int []listans = new int[1000];
 		Grid tGrid = new Grid ();
 		tGrid.iRow = sx;
 		tGrid.iCol = sy;
@@ -71,8 +71,8 @@ public class ChaserSeeking : MonoBehaviour {
 					if (((Grid)list[i]).iCol == sGrid.iCol && ((Grid)list[i]).iRow == sGrid.iRow) flag = false;
 				if (flag && sGrid.iCol>= 0 && sGrid.iCol < mazeGen.colNum && sGrid.iRow >= 0 && sGrid.iRow < mazeGen.rowNum) {
 					list.Add(sGrid);
-					listans.Add (direction);
 					end ++;
+					listans[end]=direction;
 				}
 			}
 			if (tGrid.SouthBroken) {
@@ -90,8 +90,8 @@ public class ChaserSeeking : MonoBehaviour {
 					if (((Grid)list[i]).iCol == sGrid.iCol && ((Grid)list[i]).iRow == sGrid.iRow) flag = false;
 				if (flag && sGrid.iCol>= 0 && sGrid.iCol < mazeGen.colNum && sGrid.iRow >= 0 && sGrid.iRow < mazeGen.rowNum) {
 					list.Add(sGrid);
-					listans.Add (direction);
 					end ++;
+					listans[end]=direction;
 				}
 			}
 			if (tGrid.EastBroken) {
@@ -109,8 +109,8 @@ public class ChaserSeeking : MonoBehaviour {
 					if (((Grid)list[i]).iCol == sGrid.iCol && ((Grid)list[i]).iRow == sGrid.iRow) flag = false;
 				if (flag && sGrid.iCol>= 0 && sGrid.iCol <= mazeGen.colNum && sGrid.iRow >= 0 && sGrid.iRow <= mazeGen.rowNum) {
 					list.Add(sGrid);
-					listans.Add (direction);
 					end ++;
+					listans[end]=direction;
 				}
 			}
 			if (tGrid.WestBroken) {
@@ -128,8 +128,8 @@ public class ChaserSeeking : MonoBehaviour {
 					if (((Grid)list[i]).iCol == sGrid.iCol && ((Grid)list[i]).iRow == sGrid.iRow) flag = false;
 				if (flag && sGrid.iCol>= 0 && sGrid.iCol < mazeGen.colNum && sGrid.iRow >= 0 && sGrid.iRow < mazeGen.rowNum) {
 					list.Add(sGrid);
-					listans.Add (direction);
 					end ++;
+					listans[end]=direction;
 				}
 			}
 			start ++;
