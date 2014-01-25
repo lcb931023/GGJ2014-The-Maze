@@ -5,20 +5,18 @@ public class ChaserSeeking : MonoBehaviour {
 
 	private bool chaseStarted;
 
-	private GameManager gameManager;
+	public GameObject Player;
 	// Use this for initialization
 	void Start () {
-		gameManager = GameManager.ThisClass;
 		chaseStarted = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		Vector3 distance = new Vector3 ();
-		Debug.Log (gameManager);
-		/*distance = gameManager.thePlayer.transform.position - transform.position;
+		distance = Player.transform.position - transform.position;
 		if (chaseStarted == false) checkForChaseStarting (distance);
-		chasePlayer (distance);*/
+		chasePlayer (distance);
 	}
 
 	private void checkForChaseStarting(Vector3 distance){
@@ -30,7 +28,7 @@ public class ChaserSeeking : MonoBehaviour {
 
 	private void chasePlayer(Vector3 distance){
 		if (chaseStarted) {
-			transform.position += distance.normalized * 10;
+			transform.position += distance.normalized * .1f;
 		}
 	}
 }
