@@ -14,9 +14,11 @@ public class ChaserSeeking : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Vector3 distance = gameManager.Player.transform.position - transform.position;
+		Vector3 distance = new Vector3 ();
+		Debug.Log (gameManager);
+		/*distance = gameManager.thePlayer.transform.position - transform.position;
 		if (chaseStarted == false) checkForChaseStarting (distance);
-		chasePlayer (distance);
+		chasePlayer (distance);*/
 	}
 
 	private void checkForChaseStarting(Vector3 distance){

@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour {
 
 	MazeGenerator mazeGen;
 	// Object Management
-	public GameObject Player;
+	public GameObject thePlayer;
 	//make GM accessible to other scripts
 	private static GameManager thisClass;
 	public static GameManager ThisClass {get{return thisClass;}}
