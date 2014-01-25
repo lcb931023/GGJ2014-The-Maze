@@ -8,7 +8,7 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour {
 
-	MazeGenerator mazeGen;
+	public MazeGenerator mazeGen;
 	// Object Management
 	public GameObject thePlayer;
 	//make GM accessible to other scripts

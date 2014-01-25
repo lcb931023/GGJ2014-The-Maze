@@ -16,7 +16,7 @@ public class MazeGenerator : MonoBehaviour {
 	public Object wallPrefab;
 	// Memory
 	private Stack<int> checkedGrids; // Used to contain indexes and check for path making
-	private ArrayList indexedGrids; // Used to determine grid locations
+	public ArrayList indexedGrids; // Used to determine grid locations
 	private int wallBreakerIndex; // start breaking the walls at a random grid
 	private int visitedCount;
 
