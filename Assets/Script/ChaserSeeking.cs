@@ -6,6 +6,7 @@ public class ChaserSeeking : MonoBehaviour {
 	private bool chaseStarted;
 
 	public GameObject Player;
+	public float ChaseSpeed;
 	// Use this for initialization
 	void Start () {
 		chaseStarted = false;
@@ -134,14 +135,14 @@ public class ChaserSeeking : MonoBehaviour {
 			start ++;
 		}
 		if (ans == 1) {
-			transform.position += new Vector3(0.0f, 0.0f, -1.0f) * .1f;return;}
+			transform.position += new Vector3(0.0f, 0.0f, -1.0f) * ChaseSpeed;return;}
 		else if (ans == 2) {
-			transform.position += new Vector3(0.0f, 0.0f, 1.0f) * .1f;return;}
+			transform.position += new Vector3(0.0f, 0.0f, 1.0f) * ChaseSpeed;return;}
 		else if (ans == 3) {
-			transform.position += new Vector3(1.0f, 0.0f, 0.0f) * .1f;return;}
+			transform.position += new Vector3(1.0f, 0.0f, 0.0f) * ChaseSpeed;return;}
 		else if (ans ==4) {
-			transform.position += new Vector3(-1.0f, 0.0f, 0.0f) * .1f;return;}
+			transform.position += new Vector3(-1.0f, 0.0f, 0.0f) * ChaseSpeed;return;}
 		else 
-			transform.position += distance.normalized * .1f;
+			transform.position += distance.normalized * ChaseSpeed;
 	}
 }

@@ -22,8 +22,14 @@ The Maze 策划
  - Camera Following - DONE
  - Person splitting and following - werking on it
  - Following requires some script that records protagonist's path
- 	- BFS?
- - Death, fade-to-black-screen, and rebirth with a personality 
+ 	- BFS
+ - Death, 
+ 	- camera stops following
+ - fade-to-black-screen, and 
+ - rebirth with 
+ 	- game restarting, but maze stays the same, only chaser and player goes back, personality goes down one, and 
+ - a personality standing at where you died
+
  - GUI
  	- Personality Count
 
