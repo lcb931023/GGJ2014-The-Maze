@@ -43,13 +43,13 @@ public class ChaserSeeking : MonoBehaviour {
 		times = (times + 1) % 10;
 		if (times == 0) {
 						if (-sx * 10 + transform.position.z < 1f)
-								transform.position += new Vector3 (0f, 0f, 1f) * ChaseSpeed * 0.5;
+								transform.position += new Vector3 (0f, 0f, 1f) * ChaseSpeed * 0.5f;
 						else if (-sx * 10 + transform.position.z > 9f)
-								transform.position += new Vector3 (0f, 0f, 1f) * ChaseSpeed * 0.5;
+								transform.position += new Vector3 (0f, 0f, 1f) * ChaseSpeed * 0.5f;
 						if (-sy * 10 + transform.position.x + 5 < 1f)
-								transform.position += new Vector3 (-1f, 0f, 0f) * ChaseSpeed * 0.5;
+								transform.position += new Vector3 (-1f, 0f, 0f) * ChaseSpeed * 0.5f;
 						else if (-sy * 10 + transform.position.x + 5 > 9f)
-								transform.position += new Vector3 (1f, 0f, 0f) * ChaseSpeed * 0.5;
+								transform.position += new Vector3 (1f, 0f, 0f) * ChaseSpeed * 0.5f;
 				}
 		if (chaseStarted == false) checkForChaseStarting (distance);
 		chasePlayer (sx, sy, tx, ty, distance);
