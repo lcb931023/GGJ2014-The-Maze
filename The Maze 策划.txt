@@ -20,7 +20,7 @@ The Maze 策划
  - Maze Generator
  - movement that's controlled by mouse and W - DONE
  - Camera Following - DONE
- - Person splitting and following - werking on it
+ - Person splitting and following - DONE
  - Following requires some script that records protagonist's path
  	- BFS
  - Death, 

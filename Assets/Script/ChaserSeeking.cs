@@ -8,6 +8,7 @@ public class ChaserSeeking : MonoBehaviour {
 	public GameObject Player;
 	public float ChaseSpeed;
 	// Use this for initialization
+	int times = 0;
 	private float playerx, playery, playerz, chaserx, chasery, chaserz;
 	
 	void Start () {
@@ -18,6 +19,7 @@ public class ChaserSeeking : MonoBehaviour {
 		chaserx = transform.position.x;
 		chasery = transform.position.y;
 		chaserz = transform.position.z;
+
 	}
 	
 	// Update is called once per frame
@@ -28,6 +30,17 @@ public class ChaserSeeking : MonoBehaviour {
 		int sy = (int)((transform.position.x + 5) / 10);
 		int tx = (int)(Player.transform.position.z / 10);
 		int ty = (int)((Player.transform.position.x + 5) / 10);
+		times = (times + 1) % 10;
+		if (times == 0) {
+						if (-sx * 10 + transform.position.z < 1f)
+								transform.position += new Vector3 (0f, 0f, 1f) * ChaseSpeed;
+						else if (-sx * 10 + transform.position.z > 9f)
+								transform.position += new Vector3 (0f, 0f, 1f) * ChaseSpeed;
+						if (-sy * 10 + transform.position.x + 5 < 1f)
+								transform.position += new Vector3 (-1f, 0f, 0f) * ChaseSpeed;
+						else if (-sy * 10 + transform.position.x + 5 > 9f)
+								transform.position += new Vector3 (1f, 0f, 0f) * ChaseSpeed;
+				}
 		if (chaseStarted == false) checkForChaseStarting (distance);
 		chasePlayer (sx, sy, tx, ty, distance);
 	}
@@ -40,7 +53,11 @@ public class ChaserSeeking : MonoBehaviour {
 	}
 
 	private void chasePlayer(int sx, int sy, int tx, int ty, Vector3 distance){
-		if (!chaseStarted) return;
+		if (!chaseStarted) {
+			GameManager gameManager = GameManager.ThisClass;
+			gameManager.Chaser.animation.CrossFade("idle", 0.25f);
+			return;
+		}
 		GameManager gamemanager = GameManager.ThisClass;
 		MazeGenerator mazeGen = gamemanager.mazeGen;
 		ArrayList list = new ArrayList ();
@@ -51,26 +68,29 @@ public class ChaserSeeking : MonoBehaviour {
 		list.Add (tGrid);
 		int ans = 0;
 		int start = 0;
-		if (sx.Equals (tx) && sy.Equals (ty)) {
-			if (distance.magnitude < 2) {
-				// DIE
-				//diebody db = new diebody();
-				//Transform trans = (Transform)Instantiate(db, transform, Quaternion.identity);
-				float x = Player.transform.position.x;
-				gamemanager.tx = x;
-				gamemanager.ty = Player.transform.position.y;
-				gamemanager.tz = Player.transform.position.z;
-				gamemanager.trans = Player.transform;
-				gamemanager.died = true;
-				Player.transform.position = new Vector3(playerx, playery, playerz);
-				transform.position = new Vector3 (chaserx, chasery, chaserz);
+		transform.LookAt (Player.transform.position);
+		if (distance.magnitude < 2) {
+			// DIE
+			float x = Player.transform.position.x;
+			gamemanager.tx = x;
+			gamemanager.ty = Player.transform.position.y;
+			gamemanager.tz = Player.transform.position.z;
+			gamemanager.trans = Player.transform;
+			if (gamemanager.PersonalityCount <= 1) {
+				gamemanager.Chaser.animation.CrossFade("idle", 0.25f);
 				chaseStarted = false;
-				//diebody db = trans.GetComponent<diebody>();
-				//db.transform.position = trans.position;
-				//db.transform.rotation = trans.rotation;
+				Player.SetActive(false);
+				gamemanager.died = true;
 				return;
 			}
-			transform.position += distance.normalized * .5f;
+			gamemanager.died = true;
+			Player.transform.position = new Vector3(playerx, playery, playerz);
+			transform.position = new Vector3 (chaserx, chasery, chaserz);
+			chaseStarted = false;
+			return;
+		}
+		if (sx.Equals (tx) && sy.Equals (ty)) {
+			transform.position += distance.normalized * 3 * ChaseSpeed;
 			return;
 		}
 		int end = 0;
@@ -159,6 +179,7 @@ public class ChaserSeeking : MonoBehaviour {
 			}
 			start ++;
 		}
+		gamemanager.Chaser.animation.CrossFade ("walk", 0.25f);
 		if (ans == 1) {
 			transform.position += new Vector3(0.0f, 0.0f, -1.0f) * ChaseSpeed;return;}
 		else if (ans == 2) {

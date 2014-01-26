@@ -14,12 +14,15 @@ public class GameManager : MonoBehaviour {
 	public GameObject dieBody;
 	public bool died = false;
 	public Transform trans;
+	public GameObject Chaser;
 	public float tx, ty, tz;
 	// GUI
 	public Texture TexTitle;
 	public Texture TexSmallTitle;
 	public Texture TexCounter;
 	public Texture TexInstruction;
+	public Texture TexGameover;
+	bool gameover = false;
 	// Game Variable
 	public int PersonalityCount;
 	//make GM accessible to other scripts
@@ -37,13 +40,25 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (died) {
-						Instantiate (dieBody, new Vector3(tx, ty, tz), trans.rotation);
-						PersonalityCount --;
+		if (died && PersonalityCount > 0) {
+				PersonalityCount --;
+				if (PersonalityCount > 0) {
+					Instantiate (dieBody, new Vector3(tx, ty, tz), trans.rotation);
 				}
+				if (PersonalityCount <= 0) {
+					trans.Rotate(Vector3.forward * 90);
+					trans.Rotate(Vector3.left * 48);
+					Instantiate (dieBody, new Vector3(tx, ty - 1.5f, tz), trans.rotation);
+					gameover = true;
+				}
+		}
 	}
 
 	void OnGUI(){
+		if (gameover) {
+			GUI.DrawTexture(new Rect(0, 0, 800, 600), TexGameover, ScaleMode.ScaleToFit);
+			return;
+		}
 		if (Time.time < 2)
 		{
 			CameraFade.SetScreenOverlayColor (new Color (.87f, .87f, .87f));

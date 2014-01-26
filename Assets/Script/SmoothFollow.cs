@@ -39,7 +39,7 @@ public class SmoothFollow : MonoBehaviour
 			originz = transform.position.z;
 		}
 		GameManager gamemanager = GameManager.ThisClass;
-		if (gamemanager.died) {
+		if (gamemanager.died && gamemanager.PersonalityCount > 0) {
 			transform.position = new Vector3(originx, originy, originz);
 			gamemanager.died = false;
 			return;
