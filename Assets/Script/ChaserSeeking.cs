@@ -30,16 +30,26 @@ public class ChaserSeeking : MonoBehaviour {
 		int sy = (int)((transform.position.x + 5) / 10);
 		int tx = (int)(Player.transform.position.z / 10);
 		int ty = (int)((Player.transform.position.x + 5) / 10);
+		GameManager gameManager = GameManager.ThisClass;
+
+		if (tx >= gameManager.mazeGen.rowNum || ty >= gameManager.mazeGen.colNum) {
+			// WIN!
+			chaseStarted = false;
+			gameManager.Chaser.animation.CrossFade("idle", 0.25f);
+			gameManager.win = true;
+			return;
+		}
+
 		times = (times + 1) % 10;
 		if (times == 0) {
 						if (-sx * 10 + transform.position.z < 1f)
-								transform.position += new Vector3 (0f, 0f, 1f) * ChaseSpeed;
+								transform.position += new Vector3 (0f, 0f, 1f) * ChaseSpeed * 0.5;
 						else if (-sx * 10 + transform.position.z > 9f)
-								transform.position += new Vector3 (0f, 0f, 1f) * ChaseSpeed;
+								transform.position += new Vector3 (0f, 0f, 1f) * ChaseSpeed * 0.5;
 						if (-sy * 10 + transform.position.x + 5 < 1f)
-								transform.position += new Vector3 (-1f, 0f, 0f) * ChaseSpeed;
+								transform.position += new Vector3 (-1f, 0f, 0f) * ChaseSpeed * 0.5;
 						else if (-sy * 10 + transform.position.x + 5 > 9f)
-								transform.position += new Vector3 (1f, 0f, 0f) * ChaseSpeed;
+								transform.position += new Vector3 (1f, 0f, 0f) * ChaseSpeed * 0.5;
 				}
 		if (chaseStarted == false) checkForChaseStarting (distance);
 		chasePlayer (sx, sy, tx, ty, distance);

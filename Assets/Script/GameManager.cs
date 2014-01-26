@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour {
 	public Transform trans;
 	public GameObject Chaser;
 	public float tx, ty, tz;
+	public bool win = false;
 	// GUI
 	public Texture TexTitle;
 	public Texture TexSmallTitle;
@@ -49,7 +50,8 @@ public class GameManager : MonoBehaviour {
 					trans.Rotate(Vector3.forward * 90);
 					trans.Rotate(Vector3.left * 48);
 					Instantiate (dieBody, new Vector3(tx, ty - 1.5f, tz), trans.rotation);
-					gameover = true;
+					died = true;
+					if (gameover == false) gameover = true;
 				}
 		}
 	}
