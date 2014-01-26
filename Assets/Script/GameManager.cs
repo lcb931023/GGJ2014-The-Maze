@@ -11,6 +11,10 @@ public class GameManager : MonoBehaviour {
 	public MazeGenerator mazeGen;
 	// Object Management
 	public GameObject thePlayer;
+	public GameObject dieBody;
+	public bool died = false;
+	public Transform trans;
+	public float tx, ty, tz;
 	// GUI
 	public Texture TexTitle;
 	public Texture TexSmallTitle;
@@ -33,7 +37,10 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (died) {
+						Instantiate (dieBody, new Vector3(tx, ty, tz), trans.rotation);
+						PersonalityCount --;
+				}
 	}
 
 	void OnGUI(){

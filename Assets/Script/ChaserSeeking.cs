@@ -8,8 +8,16 @@ public class ChaserSeeking : MonoBehaviour {
 	public GameObject Player;
 	public float ChaseSpeed;
 	// Use this for initialization
+	private float playerx, playery, playerz, chaserx, chasery, chaserz;
+	
 	void Start () {
 		chaseStarted = false;
+		playerx = Player.transform.position.x;
+		playery = Player.transform.position.y;
+		playerz = Player.transform.position.z;
+		chaserx = transform.position.x;
+		chasery = transform.position.y;
+		chaserz = transform.position.z;
 	}
 	
 	// Update is called once per frame
@@ -44,10 +52,27 @@ public class ChaserSeeking : MonoBehaviour {
 		int ans = 0;
 		int start = 0;
 		if (sx.Equals (tx) && sy.Equals (ty)) {
-						transform.position += distance.normalized * .5f;
-						// he's die!!!!!
-						return;
-				}
+			if (distance.magnitude < 2) {
+				// DIE
+				//diebody db = new diebody();
+				//Transform trans = (Transform)Instantiate(db, transform, Quaternion.identity);
+				float x = Player.transform.position.x;
+				gamemanager.tx = x;
+				gamemanager.ty = Player.transform.position.y;
+				gamemanager.tz = Player.transform.position.z;
+				gamemanager.trans = Player.transform;
+				gamemanager.died = true;
+				Player.transform.position = new Vector3(playerx, playery, playerz);
+				transform.position = new Vector3 (chaserx, chasery, chaserz);
+				chaseStarted = false;
+				//diebody db = trans.GetComponent<diebody>();
+				//db.transform.position = trans.position;
+				//db.transform.rotation = trans.rotation;
+				return;
+			}
+			transform.position += distance.normalized * .5f;
+			return;
+		}
 		int end = 0;
 		while (start <= end) {
 			tGrid = (Grid)list[start];

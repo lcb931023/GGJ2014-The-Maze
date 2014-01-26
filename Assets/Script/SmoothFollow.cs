@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 /// <summary>
@@ -23,11 +24,26 @@ public class SmoothFollow : MonoBehaviour
 	public float scrollMin = 0.5f;
 	public float scrollSensitivity = 1.0f;
 	
+	private float originx, originy, originz;
+	bool origin = false;
+	
 	public bool lookAt = true;
 	
 	// Update is called once per frame
 	void LateUpdate ()
 	{
+		if (!origin) {
+			origin = true;
+			originx = transform.position.x;
+			originy = transform.position.y;
+			originz = transform.position.z;
+		}
+		GameManager gamemanager = GameManager.ThisClass;
+		if (gamemanager.died) {
+			transform.position = new Vector3(originx, originy, originz);
+			gamemanager.died = false;
+			return;
+		}
 		this.checkScroll();
 		// Early out if we don't have a target
 		if (!target)
