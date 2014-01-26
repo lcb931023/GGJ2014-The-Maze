@@ -15,13 +15,14 @@ public class GameManager : MonoBehaviour {
 	public Texture TexTitle;
 	public Texture TexSmallTitle;
 	public Texture TexCounter;
+	public Texture TexInstruction;
 	// Game Variable
 	public int PersonalityCount;
 	//make GM accessible to other scripts
 	private static GameManager thisClass;
 	public static GameManager ThisClass {get{return thisClass;}}
 	// crappy coding
-	private bool alphaFadeStarted = false;
+	private int alphaFadeCounter = 0;
 	// Use this for initialization
 	void Start () {
 		thisClass = this;//make the GameManager accessible to other scripts 
@@ -38,17 +39,45 @@ public class GameManager : MonoBehaviour {
 	void OnGUI(){
 		if (Time.time < 2)
 		{
-			CameraFade.SetScreenOverlayColor (new Color (0f, 0f, 0f));
-		}else if (Time.time < 8)
+			CameraFade.SetScreenOverlayColor (new Color (.87f, .87f, .87f));
+		}else if (Time.time < 10)
 		{
-			if (alphaFadeStarted == false){
-				CameraFade.StartAlphaFade (new Color (.87f, .87f, .87f), false, 3f);
-				alphaFadeStarted = true;
+			if (Time.time < 3)
+			{
+				if (alphaFadeCounter == 0){
+					CameraFade.StartAlphaFade (new Color (.87f, .87f, .87f), true, 3f);
+					alphaFadeCounter = 1;
+				}
 			}
 			Color oldC = GUI.color;
-			GUI.color = new Color(oldC.r, oldC.g, oldC.b, (Time.time-2) / 3);
-			GUI.DrawTexture(new Rect((Screen.width - 500) / 2, (Screen.height - 110) / 2, 500, 110), TexTitle, ScaleMode.ScaleToFit);
-			GUI.color = oldC;
+			// Fade in/out the title
+			if (Time.time < 7)
+			{
+				GUI.color = new Color(oldC.r, oldC.g, oldC.b, (Time.time-2) / 1);
+				GUI.DrawTexture(new Rect((Screen.width - 500) / 2, (Screen.height - 110) / 2, 500, 110), TexTitle, ScaleMode.ScaleToFit);
+				GUI.color = oldC;
+			}else{
+				GUI.color = new Color(oldC.r, oldC.g, oldC.b, 8 - Time.time);
+				GUI.DrawTexture(new Rect((Screen.width - 500) / 2, (Screen.height - 110) / 2, 500, 110), TexTitle, ScaleMode.ScaleToFit);
+				GUI.color = oldC;
+			}
+			// Fade in/out the small title
+			if (Time.time < 9)
+			{
+				GUI.color = new Color(oldC.r, oldC.g, oldC.b, (Time.time-4) / 1);
+				GUI.DrawTexture(new Rect((Screen.width - 537) / 2, (Screen.height - 33) / 2 + 110, 537, 33), TexSmallTitle, ScaleMode.ScaleToFit);
+				GUI.color = oldC;
+			}else{
+				GUI.color = new Color(oldC.r, oldC.g, oldC.b, 10-Time.time);
+				GUI.DrawTexture(new Rect((Screen.width - 537) / 2, (Screen.height - 33) / 2 + 110, 537, 33), TexSmallTitle, ScaleMode.ScaleToFit);
+				GUI.color = oldC;
+			}
+		} else {
+			GUI.DrawTexture(new Rect(Screen.width - 480, Screen.height - 100, 480, 100), TexInstruction, ScaleMode.ScaleToFit);
+			for (int i = 0; i < PersonalityCount; i++)
+			{
+				GUI.DrawTexture(new Rect(20 + 38 * i, Screen.height - 100 - 20, 38, 100), TexCounter, ScaleMode.ScaleToFit);
+			}
 		}
 	}
 }

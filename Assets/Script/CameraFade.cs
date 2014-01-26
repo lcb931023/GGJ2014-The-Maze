@@ -98,7 +98,7 @@ public class CameraFade : MonoBehaviour
 		instance.m_FadeTexture.SetPixel(0, 0, instance.m_CurrentScreenOverlayColor);
 		instance.m_FadeTexture.Apply();
 	}
-	
+
 	/// <summary>
 	/// Starts the fade from color newScreenOverlayColor. If isFadeIn, start fully opaque, else start transparent.
 	/// </summary>
