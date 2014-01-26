@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour {
 
 	public MazeGenerator mazeGen;
 	// Object Management
+	public int wallnum;
+	public Object[] walls;
 	public GameObject thePlayer;
 	public GameObject dieBody;
 	public bool died = false;
@@ -17,12 +19,16 @@ public class GameManager : MonoBehaviour {
 	public GameObject Chaser;
 	public float tx, ty, tz;
 	public bool win = false;
+	public bool win1 = false;
+	float wtime = 0;
+	public bool renew = false;
 	// GUI
 	public Texture TexTitle;
 	public Texture TexSmallTitle;
 	public Texture TexCounter;
 	public Texture TexInstruction;
 	public Texture TexGameover;
+	public Texture TexNextlevel;
 	bool gameover = false;
 	// Game Variable
 	public int PersonalityCount;
@@ -33,6 +39,8 @@ public class GameManager : MonoBehaviour {
 	private int alphaFadeCounter = 0;
 	// Use this for initialization
 	void Start () {
+		wallnum = 0;
+		walls = new Object[10000];
 		thisClass = this;//make the GameManager accessible to other scripts 
 		mazeGen = this.GetComponent<MazeGenerator>();
 		mazeGen.generateMaze();
@@ -41,15 +49,33 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (win1) {
+			win1 = false;
+			mazeGen.colNum = (int)(mazeGen.colNum * 1.5);
+			mazeGen.rowNum = (int)(mazeGen.rowNum * 1.5);
+			for (int i = 0; i < wallnum; ++i) {
+				Destroy(walls[i]);
+			}
+			wallnum = 0;
+			mazeGen.generateMaze();
+			PersonalityCount ++;
+			wtime = Time.time;
+			renew = true;
+			CameraFade.StartAlphaFade (new Color (.87f, .87f, .87f), false, 6f, 2f);
+		}
 		if (died && PersonalityCount > 0) {
 				PersonalityCount --;
 				if (PersonalityCount > 0) {
-					Instantiate (dieBody, new Vector3(tx, ty, tz), trans.rotation);
+					Object n = Instantiate (dieBody, new Vector3(tx, ty, tz), trans.rotation);
+					walls[wallnum] = n;
+					wallnum ++;
 				}
 				if (PersonalityCount <= 0) {
 					trans.Rotate(Vector3.forward * 90);
 					trans.Rotate(Vector3.left * 48);
-					Instantiate (dieBody, new Vector3(tx, ty - 1.5f, tz), trans.rotation);
+					Object n = Instantiate (dieBody, new Vector3(tx, ty - 1.5f, tz), trans.rotation);
+					walls[wallnum] = n;
+					wallnum ++;
 					died = true;
 					if (gameover == false) gameover = true;
 				}
@@ -57,8 +83,16 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void OnGUI(){
+		if (renew) {
+			Color oldC1 = GUI.color;
+			if (Time.time - wtime < 4) {
+				GUI.DrawTexture(new Rect(0, -150, 800, 600), TexNextlevel, ScaleMode.ScaleToFit);
+			}
+			else renew = false;
+			//return;
+		}
 		if (gameover) {
-			GUI.DrawTexture(new Rect(0, 0, 800, 600), TexGameover, ScaleMode.ScaleToFit);
+			GUI.DrawTexture(new Rect(0, -50, 800, 600), TexGameover, ScaleMode.ScaleToFit);
 			return;
 		}
 		if (Time.time < 2)

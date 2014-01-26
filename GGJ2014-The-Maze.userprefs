@@ -1,14 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\SmoothFollow.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/ChaserSeeking.cs">
     <Files>
-      <File FileName="Assets\Script\SmoothFollow.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\ChaserSeeking.cs" Line="20" Column="34" />
-      <File FileName="Assets\Script\GameManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\SmoothFollow.cs" Line="33" Column="3" />
-      <File FileName="Assets\Script\MazeGenerator.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\WalkingAnimation.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Steering.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/GameManager.cs" Line="89" Column="36" />
+      <File FileName="Assets/Script/MazeGenerator.cs" Line="162" Column="20" />
+      <File FileName="Assets/Script/ChaserSeeking.cs" Line="19" Column="34" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

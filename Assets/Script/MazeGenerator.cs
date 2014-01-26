@@ -35,6 +35,8 @@ public class MazeGenerator : MonoBehaviour {
 	public void generateMaze() {
 		checkedGrids = new Stack<int>();
 		indexedGrids = new ArrayList ();
+		checkedGrids.Clear ();
+		indexedGrids.Clear ();
 		wallBreakerIndex = (int)Mathf.Floor(Random.Range(0, rowNum*colNum));//sets the starting point of maze making (wall breaking)
 		visitedCount = 1;
 		// Add maze's grid base 
@@ -144,31 +146,40 @@ public class MazeGenerator : MonoBehaviour {
 
 	// Due to lazy scripting, North and South is in fact switched, while East and West asts the same.
 	private void erectWalls() {
+		GameManager gamemanager = GameManager.ThisClass;
 		for (int i=0; i<rowNum * colNum; i++)
 		{
 			if(!((Grid)indexedGrids[i]).NorthBroken)
 			{
-				Instantiate(wallPrefab, 
+				Object n  = Instantiate(wallPrefab, 
 				            new Vector3 (((Grid)indexedGrids[i]).iCol * 10, 0, ((Grid)indexedGrids[i]).iRow * 10), 
-				            Quaternion.Euler(0, 180, 0));
+				            Quaternion.Euler(0, 180, 0));//);
+				gamemanager.walls[gamemanager.wallnum] = n;
+				gamemanager.wallnum++;
 			}
 			if(!((Grid)indexedGrids[i]).SouthBroken)
 			{
-				Instantiate(wallPrefab, 
+				Object n  = Instantiate(wallPrefab, 
 				            new Vector3 (((Grid)indexedGrids[i]).iCol * 10, 0, ((Grid)indexedGrids[i]).iRow * 10 + 10), 
 				            Quaternion.identity);
+				gamemanager.walls[gamemanager.wallnum] = n;
+				gamemanager.wallnum++;
 			}
 			if(!((Grid)indexedGrids[i]).WestBroken)
 			{
-				Instantiate(wallPrefab, 
+				Object n  = Instantiate(wallPrefab, 
 				            new Vector3 (((Grid)indexedGrids[i]).iCol * 10 - 5, 0, ((Grid)indexedGrids[i]).iRow * 10 + 5), 
 				            Quaternion.Euler(0, -90, 0));
+				gamemanager.walls[gamemanager.wallnum] = n;
+				gamemanager.wallnum++;
 			}
 			if(!((Grid)indexedGrids[i]).EastBroken)
 			{
-				Instantiate(wallPrefab, 
+				Object n  = Instantiate(wallPrefab, 
 				            new Vector3 (((Grid)indexedGrids[i]).iCol * 10 + 5, 0, ((Grid)indexedGrids[i]).iRow * 10 + 5), 
 				            Quaternion.Euler(0, 90, 0));
+				gamemanager.walls[gamemanager.wallnum] = n;
+				gamemanager.wallnum++;
 			}
 		}
 	}

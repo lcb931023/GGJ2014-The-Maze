@@ -37,20 +37,25 @@ public class ChaserSeeking : MonoBehaviour {
 			chaseStarted = false;
 			gameManager.Chaser.animation.CrossFade("idle", 0.25f);
 			gameManager.win = true;
+			gameManager.win1 = true;
+			float x = Player.transform.position.x;
+			GameManager gamemanager = GameManager.ThisClass;
+			Player.transform.position = new Vector3(playerx, playery, playerz);
+			transform.position = new Vector3 (chaserx, chasery, chaserz);
 			return;
 		}
 
-		times = (times + 1) % 10;
+		times = (times + 1) % 30;
 		if (times == 0) {
-						if (-sx * 10 + transform.position.z < 1f)
-								transform.position += new Vector3 (0f, 0f, 1f) * ChaseSpeed * 0.5f;
-						else if (-sx * 10 + transform.position.z > 9f)
-								transform.position += new Vector3 (0f, 0f, 1f) * ChaseSpeed * 0.5f;
-						if (-sy * 10 + transform.position.x + 5 < 1f)
-								transform.position += new Vector3 (-1f, 0f, 0f) * ChaseSpeed * 0.5f;
-						else if (-sy * 10 + transform.position.x + 5 > 9f)
-								transform.position += new Vector3 (1f, 0f, 0f) * ChaseSpeed * 0.5f;
-				}
+			if (-sx * 10 + transform.position.z < 1f)
+				transform.position += new Vector3 (0f, 0f, 1f) * ChaseSpeed * 0.8f;
+			else if (-sx * 10 + transform.position.z > 9f)
+				transform.position += new Vector3 (0f, 0f, 1f) * ChaseSpeed * 0.8f;
+			if (-sy * 10 + transform.position.x + 5 < 1f)
+				transform.position += new Vector3 (-1f, 0f, 0f) * ChaseSpeed * 0.8f;
+			else if (-sy * 10 + transform.position.x + 5 > 9f)
+				transform.position += new Vector3 (1f, 0f, 0f) * ChaseSpeed * 0.8f;
+		}
 		if (chaseStarted == false) checkForChaseStarting (distance);
 		chasePlayer (sx, sy, tx, ty, distance);
 	}
@@ -59,13 +64,16 @@ public class ChaserSeeking : MonoBehaviour {
 		if (distance.magnitude > 10)
 		{
 			chaseStarted = true;
+			GameManager gameManager = GameManager.ThisClass;
+			gameManager.Chaser.SetActive(true);
+			gameManager.Chaser.animation.CrossFade("walk", 0.25f);
 		}
 	}
 
 	private void chasePlayer(int sx, int sy, int tx, int ty, Vector3 distance){
 		if (!chaseStarted) {
 			GameManager gameManager = GameManager.ThisClass;
-			gameManager.Chaser.animation.CrossFade("idle", 0.25f);
+			gameManager.Chaser.SetActive(false);
 			return;
 		}
 		GameManager gamemanager = GameManager.ThisClass;
@@ -100,7 +108,7 @@ public class ChaserSeeking : MonoBehaviour {
 			return;
 		}
 		if (sx.Equals (tx) && sy.Equals (ty)) {
-			transform.position += distance.normalized * 3 * ChaseSpeed;
+			transform.position += distance.normalized * 2 * ChaseSpeed;
 			return;
 		}
 		int end = 0;
