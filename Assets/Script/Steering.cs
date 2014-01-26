@@ -14,7 +14,8 @@ public class Steering : MonoBehaviour {
 	private float moveSpeed;
 	private Vector3 moveDirection;
 	private CharacterController characterController;
-	
+
+	private GameObject playerModel;
 	
 	// The rotation factor, this will control the speed we rotate at.
 	public float rotationSensitvity = 500.0f;
@@ -22,22 +23,28 @@ public class Steering : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Screen.lockCursor = true;//Hide the mouse
+
+		playerModel = this.transform.Find ("Player Model").gameObject;
+		playerModel.animation.CrossFade("idle", 0.25f);  
+
 		moveDirection = transform.forward;
 		moveSpeed = 0;
 		characterController = gameObject.GetComponent<CharacterController>();
-		
-		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKey("w"))
+		if (Input.GetKey("w") || Input.GetKey(KeyCode.UpArrow))
 		{
 			moveSpeed += acceleration;
 			if (moveSpeed > moveSpeedMax) moveSpeed = moveSpeedMax;
+			// Animate
+			playerModel.animation.CrossFade ("walk", 0.25f);
 		} else {
 			moveSpeed -= acceleration * 2;
 			if (moveSpeed < 0) moveSpeed = 0;
+			// Animate
+			playerModel.animation.CrossFade("idle", 0.25f);
 		}
 
 		moveDirection = transform.forward * moveSpeed;
